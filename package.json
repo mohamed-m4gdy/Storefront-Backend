@@ -8,6 +8,7 @@
     "build": "tsc",
     "start": "npm run build && node dist/index.js",
     "format": "prettier --write src/**/*.ts",
+    "migration:run": "db-migrate up",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
     "test": "npm run build && jasmine"
@@ -43,6 +44,8 @@
   "dependencies": {
     "@types/morgan": "^1.9.3",
     "@types/pg": "^8.6.5",
+    "db-migrate": "^0.11.13",
+    "db-migrate-pg": "^1.2.2",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "express-rate-limit": "^6.5.1",

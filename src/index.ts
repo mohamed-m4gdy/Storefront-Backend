@@ -4,7 +4,7 @@ import helmet from 'helmet'
 import Ratelimit from 'express-rate-limit'
 import errorMiddleware from './middleware/error.middleware'
 import config from './utils/config'
-import db from './database'
+import routes from './routes/index'
 
 const port = config.port || 3000
 
@@ -30,31 +30,12 @@ app.use(
     message: 'Too many accounts created from this IP, please try again after an hour',
   })
 )
+// Routes On API
+app.use('/api', routes)
 
 // [ Get ] Add basic route
 app.get('/', (req: Request, res: Response) => {
-  throw new Error('test')
   res.json({ message: 'hello world' })
-})
-
-// [ Post ] post request
-app.post('/', (req: Request, res: Response) => {
-  console.log(req.body)
-  res.json({ message: 'Hello World From Post Request', data: req.body })
-})
-
-// Test DB
-db.connect().then((client) => {
-  return client
-    .query('SELECT NOW()')
-    .then((res) => {
-      client.release()
-      console.log(res.rows)
-    })
-    .catch((err) => {
-      client.release()
-      console.log(err.stack)
-    })
 })
 
 // Handling Errors
