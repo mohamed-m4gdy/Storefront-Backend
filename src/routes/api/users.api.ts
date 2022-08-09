@@ -4,10 +4,7 @@ import validateTokenMiddleware from '../../middleware/authentication.middleware'
 
 const routes = Router()
 
-routes
-  .route('/')
-  .get(validateTokenMiddleware, controllers.getAllUsers)
-  .post(controllers.create)
+routes.route('/').get(controllers.getAllUsers).post(controllers.create)
 routes
   .route('/:id')
   .get(controllers.getOneUser)

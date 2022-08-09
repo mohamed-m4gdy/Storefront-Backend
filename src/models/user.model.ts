@@ -85,7 +85,7 @@ class UserModel {
       // Return users
       return result.rows[0]
     } catch (err) {
-      throw new Error(`Unable To Get All Users (${(err as Error).message})`)
+      throw new Error(`Unable To Update User (${(err as Error).message})`)
     }
   }
   // DELETE USER
@@ -102,7 +102,7 @@ class UserModel {
       // Return users
       return result.rows[0]
     } catch (err) {
-      throw new Error(`Unable To Get All Users (${(err as Error).message})`)
+      throw new Error(`Unable To Delete user (${(err as Error).message})`)
     }
   }
   // AUTHENTICATE USER
