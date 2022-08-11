@@ -12,23 +12,19 @@ class UserModel {
   // CREATE USER
   async create(u: User): Promise<User> {
     try {
-      // Open Connection With DB
       const connection = await db.connect()
-      // Create query
-      const sql =
-        'INSERT INTO users (first_name, last_name, password) VALUES ($1, $2, $3) RETURNING first_name, last_name'
-      // Run Query
+      const sql = `INSERT INTO users (first_name, last_name, password) 
+                  values ($1, $2, $3) 
+                  RETURNING id, first_name, last_name`
       const result = await connection.query(sql, [
         u.first_name,
         u.last_name,
-        hashPassword(u.password),
+        hashPassword(u.password as string),
       ])
-      // Release Connection
       connection.release()
-      // Return Created User
       return result.rows[0]
-    } catch (err) {
-      throw new Error(`Unable To Create User (${(err as Error).message})`)
+    } catch (error) {
+      throw new Error(`Unable to create User ${(error as Error).message}`)
     }
   }
   // GET ALL USERS
@@ -54,7 +50,7 @@ class UserModel {
       // Open Connection With DB
       const connection = await db.connect()
       // Create query
-      const sql = 'SELECT first_name, last_name FROM users WHERE id = ($1)'
+      const sql = 'SELECT id, first_name, last_name FROM users WHERE id = ($1)'
       // Run Query
       const result = await connection.query(sql, [id])
       // Release Connection

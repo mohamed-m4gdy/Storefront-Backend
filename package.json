@@ -6,12 +6,13 @@
   "scripts": {
     "dev": "nodemon src/index.ts",
     "build": "tsc",
+    "remove": "rimraf dist/",
     "start": "npm run build && node dist/index.js",
     "format": "prettier --write src/**/*.ts",
     "migration:run": "db-migrate up",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
-    "test": "npm run build && jasmine"
+    "test": "set NODE_ENV=test&& db-migrate up --env test && tsc && jasmine && db-migrate reset"
   },
   "repository": {
     "type": "git",

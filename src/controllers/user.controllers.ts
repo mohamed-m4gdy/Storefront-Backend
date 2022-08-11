@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import jwt from 'jsonwebtoken'
+import generateJWT from '../helpers/generateJWT'
 import UserModel from '../models/user.model'
 import config from '../utils/config'
 
@@ -8,9 +9,10 @@ const userModel = new UserModel()
 export const create = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const user = await userModel.create(req.body)
+    const token = generateJWT(user)
     res.json({
       message: 'User Created',
-      data: { ...user },
+      data: { ...user, token },
     })
   } catch (err) {
     next(err)
@@ -70,8 +72,11 @@ export const deleteUser = async (req: Request, res: Response, next: NextFunction
 export const authenticate = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { last_name, password } = req.body
+
     const user = await userModel.authenticate(last_name, password)
+
     const token = jwt.sign({ user }, config.tokenSecret as unknown as string)
+
     if (!user) {
       return res.status(404).json({
         status: 'error',
@@ -79,7 +84,6 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
       })
     }
     return res.json({
-      message: 'User Authenticate Succ',
       data: { ...user, token },
     })
   } catch (err) {

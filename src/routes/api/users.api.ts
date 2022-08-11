@@ -4,13 +4,16 @@ import validateTokenMiddleware from '../../middleware/authentication.middleware'
 
 const routes = Router()
 
-routes.route('/').get(controllers.getAllUsers).post(controllers.create)
+routes.route('/').get(validateTokenMiddleware, controllers.getAllUsers)
+
+routes.route('/register').post(controllers.create)
+
+routes.route('/login').post(controllers.authenticate)
+
 routes
   .route('/:id')
-  .get(controllers.getOneUser)
-  .patch(controllers.updateUser)
-  .delete(controllers.deleteUser)
-
-routes.route('/authenticate').post(controllers.authenticate)
+  .get(validateTokenMiddleware, controllers.getOneUser)
+  .patch(validateTokenMiddleware, controllers.updateUser)
+  .delete(validateTokenMiddleware, controllers.deleteUser)
 
 export default routes

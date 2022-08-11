@@ -9,7 +9,7 @@ class ProductModel {
       const connection = await db.connect()
       // Create query
       const sql =
-        'INSERT INTO product (name, price) VALUES ($1, $2) RETURNING name, price'
+        'INSERT INTO product (name, price) VALUES ($1, $2) RETURNING id, name, price'
       // Run Query
       const result = await connection.query(sql, [p.name, p.price])
       // Release Connection
