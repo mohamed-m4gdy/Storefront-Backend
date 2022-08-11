@@ -53,12 +53,6 @@ Follow These Steps To Start The Project
 - run npm run dev to start the development server
 ## API Endpoints
 
-{
-        "quantity": 15,
-        "status": "active",
-        "user_id": "541f85bc-4e4f-4b53-bd41-49e4aa683a59",
-        "product_id": "05d1336a-38cd-4cd6-a11b-c94ccd5b6c9d"
-}
 
 #### Products
 - Index: [token required]: '/api/products' [GET]
@@ -115,6 +109,7 @@ Follow These Steps To Start The Project
         "user_id": "Your User Id"
         "product_id": "Product id"
   }
+  ```
 - Current Order by user (args: user id)[token required]: '/api/orders/:id' [GET]
 - will return all the products for this user_id
 
@@ -141,46 +136,45 @@ Follow These Steps To Start The Project
 
 ## used scripts
 
--------------------------------------------------------------------------------------------------------------------------------------------------
-
+---------------------------
 ### npm run build
 ```
 To compile typescript files to javascript, in dist folder
 ```
--------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------
 
 ### npm run remove
 ```
 To remove dist folder
 ```
--------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------
 
 ### npm run lint
 ```
 To run eslint formatter
 ```
--------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------
 
 ### npm run format
 ```
 To run prettier formatter
 ```
--------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------
 
 ### npm run dev
 ```
 To run dev to start the dev server
 ```
--------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------
 
 ### npm run start
 ```
 To run build to compile files from typescript to javascript and start the server with nodemon in only one script
 ```
--------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------
 
 ### npm run test
 ```
 To set NODE_ENV to test and run migrations and run jasmine test then reset all the changes again
 ```
--------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------
