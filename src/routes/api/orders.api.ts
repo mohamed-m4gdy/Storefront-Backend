@@ -4,7 +4,6 @@ import validateTokenMiddleware from '../../middleware/authentication.middleware'
 
 const routes = Router()
 
-routes.route('/').post(validateTokenMiddleware, controllers.addOrders)
-routes.route('/:id').get(validateTokenMiddleware, controllers.getOrder)
+routes.route('/:id/current-order').get(validateTokenMiddleware, controllers.getOrder)
 
 export default routes

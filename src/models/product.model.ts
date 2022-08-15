@@ -9,9 +9,9 @@ class ProductModel {
       const connection = await db.connect()
       // Create query
       const sql =
-        'INSERT INTO product (name, price) VALUES ($1, $2) RETURNING id, name, price'
+        'INSERT INTO product (name, price, category) VALUES ($1, $2, $3) RETURNING id, name, price, category'
       // Run Query
-      const result = await connection.query(sql, [p.name, p.price])
+      const result = await connection.query(sql, [p.name, p.price, p.category])
       // Release Connection
       connection.release()
       // Return [Product]
@@ -26,7 +26,7 @@ class ProductModel {
       // Open Connection With DB
       const connection = await db.connect()
       // Create query
-      const sql = 'SELECT id, name, price FROM product'
+      const sql = 'SELECT id, name, price, category FROM product'
       // Run Query
       const result = await connection.query(sql)
       // Release Connection
@@ -43,7 +43,7 @@ class ProductModel {
       // Open Connection With DB
       const connection = await db.connect()
       // Create query
-      const sql = 'SELECT id, name, price FROM product WHERE id = ($1)'
+      const sql = 'SELECT id, name, price, category FROM product WHERE id = ($1)'
       // Run Query
       const result = await connection.query(sql, [id])
       // Release Connection
@@ -61,9 +61,9 @@ class ProductModel {
       const connection = await db.connect()
       // Create query
       const sql =
-        'UPDATE product SET name=$1, price=$2 WHERE id=$3 RETURNING id, name, price'
+        'UPDATE product SET name=$1, price=$2, category=$3 WHERE id=$4 RETURNING id, name, price, category'
       // Run Query
-      const result = await connection.query(sql, [p.name, p.price, p.id])
+      const result = await connection.query(sql, [p.name, p.price, p.category, p.id])
       // Release Connection
       connection.release()
       // Return Product
@@ -78,7 +78,8 @@ class ProductModel {
       // Open Connection With DB
       const connection = await db.connect()
       // Create query
-      const sql = 'DELETE FROM product WHERE id = ($1) RETURNING id, name, price'
+      const sql =
+        'DELETE FROM product WHERE id = ($1) RETURNING id, name, price, category'
       // Run Query
       const result = await connection.query(sql, [id])
       // Release Connection
