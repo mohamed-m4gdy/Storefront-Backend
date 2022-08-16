@@ -75,23 +75,5 @@ describe('Product Model', () => {
       expect(returnedProduct.name).toBe(product.name)
       expect(returnedProduct.price).toBe(product.price)
     })
-
-    // Update Product
-    it('Update Product method should return a Product with Updated attributes', async () => {
-      const updatedProduct = await productModel.updateProduct({
-        ...product,
-        name: 'product_updated',
-        price: 600,
-      })
-      expect(updatedProduct.id).toBe(product.id)
-      expect(updatedProduct.name).toBe('product_updated')
-      expect(updatedProduct.price).toBe(600)
-    })
-
-    // Delete Product
-    it('Delete Product method should delete Product from DB', async () => {
-      const deletedProduct = await productModel.deleteProduct(product.id as string)
-      expect(deletedProduct.id).toBe(product.id)
-    })
   })
 })

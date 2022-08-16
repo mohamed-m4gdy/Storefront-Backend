@@ -39,28 +39,3 @@ export const getOneProduct = async (req: Request, res: Response, next: NextFunct
     next(err)
   }
 }
-
-export const updateProduct = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const product = await productModel.updateProduct(req.body)
-    res.json({
-      message: 'Product Updated',
-      data: product,
-    })
-  } catch (err) {
-    next(err)
-  }
-}
-
-export const deleteProduct = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const id = req.params.id as unknown as string
-    const product = await productModel.deleteProduct(id)
-    res.json({
-      message: 'Product Deleted',
-      data: product,
-    })
-  } catch (err) {
-    next(err)
-  }
-}

@@ -10,10 +10,6 @@ routes.route('/register').post(controllers.create)
 
 routes.route('/login').post(controllers.authenticate)
 
-routes
-  .route('/:id')
-  .get(validateTokenMiddleware, controllers.getOneUser)
-  .patch(validateTokenMiddleware, controllers.updateUser)
-  .delete(validateTokenMiddleware, controllers.deleteUser)
+routes.route('/:id').get(validateTokenMiddleware, controllers.getOneUser)
 
 export default routes

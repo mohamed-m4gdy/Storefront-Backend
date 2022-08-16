@@ -8,10 +8,6 @@ routes
   .route('/')
   .get(controllers.getAllProducts)
   .post(validateTokenMiddleware, controllers.create)
-routes
-  .route('/:id')
-  .get(validateTokenMiddleware, controllers.getOneProduct)
-  .patch(validateTokenMiddleware, controllers.updateProduct)
-  .delete(validateTokenMiddleware, controllers.deleteProduct)
+routes.route('/:id').get(validateTokenMiddleware, controllers.getOneProduct)
 
 export default routes

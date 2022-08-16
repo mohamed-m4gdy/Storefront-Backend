@@ -80,23 +80,5 @@ describe('User Model', () => {
       expect(returnedUser.first_name).toBe(user.first_name)
       expect(returnedUser.last_name).toBe(user.last_name)
     })
-
-    // Update User
-    it('Update User method should return a user with Updated attributes', async () => {
-      const updatedUser = await userModel.updateUser({
-        ...user,
-        first_name: 'updated',
-        last_name: 'updated_last',
-      })
-      expect(updatedUser.id).toBe(user.id)
-      expect(updatedUser.first_name).toBe('updated')
-      expect(updatedUser.last_name).toBe('updated_last')
-    })
-
-    // Delete User
-    it('Delete User method should delete user from DB', async () => {
-      const deletedUser = await userModel.deleteUser(user.id as string)
-      expect(deletedUser.id).toBe(user.id)
-    })
   })
 })

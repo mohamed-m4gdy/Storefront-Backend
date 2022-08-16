@@ -44,31 +44,6 @@ export const getOneUser = async (req: Request, res: Response, next: NextFunction
   }
 }
 
-export const updateUser = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const user = await userModel.updateUser(req.body)
-    res.json({
-      message: 'User Updated',
-      data: user,
-    })
-  } catch (err) {
-    next(err)
-  }
-}
-
-export const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const id = req.params.id as unknown as string
-    const user = await userModel.deleteUser(id)
-    res.json({
-      message: 'User Deleted',
-      data: user,
-    })
-  } catch (err) {
-    next(err)
-  }
-}
-
 export const authenticate = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { last_name, password } = req.body

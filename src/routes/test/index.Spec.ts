@@ -93,35 +93,5 @@ describe('User Api Endpoint', () => {
       expect(res.body.data.first_name).toBe('test')
       expect(res.body.data.last_name).toBe('test2')
     })
-
-    //Update User
-    it('should update user info', async () => {
-      const res = await request
-        .patch(`/api/users/${user.id}`)
-        .set('Content-type', 'application/json')
-        .set('Authorization', `Bearer ${token}`)
-        .send({
-          ...user,
-          first_name: 'first_name',
-          last_name: 'last_name',
-        })
-      expect(res.status).toBe(200)
-
-      const { id, first_name, last_name } = res.body.data
-      expect(id).toBe(user.id)
-      expect(first_name).toBe('first_name')
-      expect(last_name).toBe('last_name')
-    })
-
-    // Delete User
-    it('should delete user', async () => {
-      const res = await request
-        .delete(`/api/users/${user.id}`)
-        .set('Content-type', 'application/json')
-        .set('Authorization', `Bearer ${token}`)
-      expect(res.status).toBe(200)
-      expect(res.body.data.id).toBe(user.id)
-      expect(res.body.data.last_name).toBe('last_name')
-    })
   })
 })

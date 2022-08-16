@@ -61,46 +61,6 @@ class UserModel {
       throw new Error(`Unable To Get All Users (${(err as Error).message})`)
     }
   }
-  // UPDATE USER
-  async updateUser(u: User): Promise<User> {
-    try {
-      // Open Connection With DB
-      const connection = await db.connect()
-      // Create query
-      const sql =
-        'UPDATE users SET first_name=$1, last_name=$2, password=$3 WHERE id=$4 RETURNING id, first_name, last_name, password'
-      // Run Query
-      const result = await connection.query(sql, [
-        u.first_name,
-        u.last_name,
-        hashPassword(u.password),
-        u.id,
-      ])
-      // Release Connection
-      connection.release()
-      // Return users
-      return result.rows[0]
-    } catch (err) {
-      throw new Error(`Unable To Update User (${(err as Error).message})`)
-    }
-  }
-  // DELETE USER
-  async deleteUser(id: string): Promise<User> {
-    try {
-      // Open Connection With DB
-      const connection = await db.connect()
-      // Create query
-      const sql = 'DELETE FROM users WHERE id = ($1) RETURNING id, first_name, last_name'
-      // Run Query
-      const result = await connection.query(sql, [id])
-      // Release Connection
-      connection.release()
-      // Return users
-      return result.rows[0]
-    } catch (err) {
-      throw new Error(`Unable To Delete user (${(err as Error).message})`)
-    }
-  }
   // AUTHENTICATE USER
   async authenticate(last_name: string, password: string): Promise<User | null> {
     try {
