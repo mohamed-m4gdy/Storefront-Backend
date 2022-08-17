@@ -1,59 +1,45 @@
-import db from '../database'
-import Product from '../types/product.type'
+import client from '../database'
+import ProductType from '../types/products.types'
 
-class ProductModel {
-  // Add Product
-  async create(p: Product): Promise<Product> {
+export default class Product {
+  async index(): Promise<ProductType[]> {
     try {
-      // Open Connection With DB
-      const connection = await db.connect()
-      // Create query
-      const sql =
-        'INSERT INTO product (name, price, category) VALUES ($1, $2, $3) RETURNING id, name, price, category'
-      // Run Query
-      const result = await connection.query(sql, [p.name, p.price, p.category])
-      // Release Connection
-      connection.release()
-      // Return [Product]
-      return result.rows[0]
-    } catch (err) {
-      throw new Error(`Unable To Add Product (${(err as Error).message})`)
-    }
-  }
-  // GET ALL Products
-  async getAllProducts(): Promise<Product[]> {
-    try {
-      // Open Connection With DB
-      const connection = await db.connect()
-      // Create query
-      const sql = 'SELECT id, name, price, category FROM product'
-      // Run Query
-      const result = await connection.query(sql)
-      // Release Connection
-      connection.release()
-      // Return Products
+      const conn = await client.connect()
+      const sql = 'SELECT * from products'
+      const result = await conn.query(sql)
+      conn.release()
       return result.rows
-    } catch (err) {
-      throw new Error(`Unable To Get All Products (${(err as Error).message})`)
+    } catch (e) {
+      throw new Error(`An Error occurred while getting products: ${e}`)
     }
   }
-  // GET ONE Product
-  async getOneProduct(id: string): Promise<Product> {
+
+  async show(id: string): Promise<ProductType> {
     try {
-      // Open Connection With DB
-      const connection = await db.connect()
-      // Create query
-      const sql = 'SELECT id, name, price, category FROM product WHERE id = ($1)'
-      // Run Query
-      const result = await connection.query(sql, [id])
-      // Release Connection
-      connection.release()
-      // Return Product
+      const conn = await client.connect()
+      const sql = 'SELECT * from products WHERE id=($1)'
+      const result = await conn.query(sql, [id])
+      conn.release()
       return result.rows[0]
-    } catch (err) {
-      throw new Error(`Unable To Get Product (${(err as Error).message})`)
+    } catch (e) {
+      throw new Error(`An Error occurred while getting product with id: ${id}: ${e}`)
+    }
+  }
+
+  async create(product: ProductType): Promise<ProductType> {
+    try {
+      const conn = await client.connect()
+      const sql =
+        'INSERT INTO products (name, price, category) VALUES ($1, $2, $3) RETURNING *'
+      const result = await conn.query(sql, [
+        product.name,
+        product.price,
+        product.category,
+      ])
+      conn.release()
+      return result.rows[0]
+    } catch (e) {
+      throw new Error(`An Error occurred while creating product: ${e}`)
     }
   }
 }
-
-export default ProductModel

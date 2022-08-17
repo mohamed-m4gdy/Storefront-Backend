@@ -1,72 +1,67 @@
-import bcrypt from 'bcrypt'
-import db from '../database'
-import User from '../types/user.type'
+import client from '../database'
+import UserType from '../types/users.types'
 import config from '../utils/config'
+import bcrypt from 'bcrypt'
 
-const hashPassword = (password: string) => {
-  const salt = parseInt(config.salt as string, 10)
-  return bcrypt.hashSync(`${password}${config.pepper}`, salt)
-}
-
-class UserModel {
-  // CREATE USER
-  async create(u: User): Promise<User> {
+export default class User {
+  async index(): Promise<UserType[]> {
     try {
-      const connection = await db.connect()
-      const sql = `INSERT INTO users (first_name, last_name, password) 
-                  values ($1, $2, $3) 
-                  RETURNING id, first_name, last_name`
-      const result = await connection.query(sql, [
-        u.first_name,
-        u.last_name,
-        hashPassword(u.password as string),
-      ])
-      connection.release()
-      return result.rows[0]
-    } catch (error) {
-      throw new Error(`Unable to create User ${(error as Error).message}`)
-    }
-  }
-  // GET ALL USERS
-  async getAllUsers(): Promise<User[]> {
-    try {
-      // Open Connection With DB
-      const connection = await db.connect()
-      // Create query
-      const sql = 'SELECT id, first_name, last_name FROM users'
-      // Run Query
-      const result = await connection.query(sql)
-      // Release Connection
-      connection.release()
-      // Return users
+      const conn = await client.connect()
+      const sql = 'SELECT id, firstname, lastname, email from users'
+      const result = await conn.query(sql)
+      conn.release()
       return result.rows
-    } catch (err) {
-      throw new Error(`Unable To Get All Users (${(err as Error).message})`)
+    } catch (e) {
+      throw new Error(`An Error occurred while getting users: ${e}`)
     }
   }
-  // GET ONE USER
-  async getOneUser(id: string): Promise<User> {
+  async show(id: string): Promise<UserType> {
     try {
-      // Open Connection With DB
-      const connection = await db.connect()
-      // Create query
-      const sql = 'SELECT id, first_name, last_name FROM users WHERE id = ($1)'
-      // Run Query
-      const result = await connection.query(sql, [id])
-      // Release Connection
-      connection.release()
-      // Return users
+      const conn = await client.connect()
+      const sql = 'SELECT id, firstname, lastname, email from users WHERE id=($1)'
+      const result = await conn.query(sql, [id])
+      conn.release()
       return result.rows[0]
-    } catch (err) {
-      throw new Error(`Unable To Get All Users (${(err as Error).message})`)
+    } catch (e) {
+      throw new Error(`An Error occurred while getting user with id: ${id}: ${e}`)
     }
   }
-  // AUTHENTICATE USER
-  async authenticate(last_name: string, password: string): Promise<User | null> {
+  async getByEmail(email: string): Promise<UserType> {
     try {
-      const connection = await db.connect()
-      const sql = 'SELECT password FROM users WHERE last_name=$1'
-      const result = await connection.query(sql, [last_name])
+      const conn = await client.connect()
+      const sql = 'SELECT * from users WHERE email=($1)'
+      const result = await conn.query(sql, [email])
+      conn.release()
+      return result.rows[0]
+    } catch (e) {
+      throw new Error(`An Error occurred while getting user with id: ${email}: ${e}`)
+    }
+  }
+
+  async create(user: UserType): Promise<UserType> {
+    try {
+      const conn = await client.connect()
+      const sql = `INSERT INTO users (firstname, lastname, password, email) 
+      values ($1, $2, $3, $4) 
+      RETURNING id, firstname, lastname, email`
+      const result = await conn.query(sql, [
+        user.firstname,
+        user.lastname,
+        user.password,
+        user.email,
+      ])
+      await conn.release()
+      return result.rows[0]
+    } catch (e) {
+      throw new Error(`An Error occurred while creating user: ${e}`)
+    }
+  }
+
+  async login(email: string, password: string): Promise<UserType | null> {
+    try {
+      const connection = await client.connect()
+      const sql = 'SELECT password FROM users WHERE email=$1'
+      const result = await connection.query(sql, [email])
       if (result.rows.length) {
         const { password: hashPassword } = result.rows[0]
         const isPasswordValid = bcrypt.compareSync(
@@ -75,8 +70,8 @@ class UserModel {
         )
         if (isPasswordValid) {
           const userInfo = await connection.query(
-            'SELECT id, first_name, last_name FROM users WHERE last_name=($1)',
-            [last_name]
+            'SELECT id, firstname, lastname, email FROM users WHERE email=($1)',
+            [email]
           )
           return userInfo.rows[0]
         }
@@ -88,5 +83,3 @@ class UserModel {
     }
   }
 }
-
-export default UserModel

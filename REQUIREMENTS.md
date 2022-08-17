@@ -5,31 +5,27 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 ## API Endpoints
 #### Products
-- Index: [token required]: '/api/products' [GET]
-- Show: [token required]: '/api/products/:id' [GET]
-- Create [token required]: '/api/products' [POST]
-- Update [token required]: '/api/products/id' [patch]
-- delete [token required]: '/api/products/id' [delete]
+- Index: [token required]: '/products' [GET]
+- Show: [token required]: '/products/:id' [GET]
+- Create [token required]: '/products' [POST]
 
 #### Users
-- Index [token required]: '/api/users' [GET]
-- Show [token required]: '/api/users/:id' [GET]
-- Create '/api/users/register' [POST]
-- Update [token required]: '/api/users/id' [patch]
-- delete [token required]: '/api/users/id' [delete]
+- Index [token required]: '/users' [GET]
+- Show [token required]: '/users/:id' [GET]
+- Create '/register' [POST]
 
 ### Authenticate
-- Login '/api/users/login'
+- Login '/login'
 
 #### Orders
-- Add Product To user Orders (args: user id)[token required]: '/api/orders/' [POST]
-- Current Order by user (args: user id)[token required]: '/api/orders/:id' [GET]
+- Current Order by user (args: user id)[token required]: 'users/:id/current-order' [GET]
 
 ## Data Shapes
 #### Product
 -  id
 - name
 - price
+- [OPTIONAL] category
 
 #### User
 - id
@@ -39,7 +35,7 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 #### Orders
 - id
+- id of each product in the order
 - quantity of each product in the order
-- status of order (active or complete)
 - user_id
-- product_id
+- status of order (active or complete)

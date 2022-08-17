@@ -55,69 +55,43 @@ Follow These Steps To Start The Project
 
 
 #### Products
-- Index: [token required]: '/api/products' [GET]
-- Show: [token required]:[product id] '/api/products/:id' [GET]
-- Create [token required]: '/api/products' [POST] request must contains the following:
+- Index: [token required]: '/products' [GET]
+- Show: [token required]:[product id] '/products/:id' [GET]
+- Create [token required]: '/products' [POST] request must contains the following:
  ```
   {
         "name": "Your Name Of The Product",
         "price": 500      => Your Price Of The Product
+        "category": "Your Category Name"
   }
  ```
-- Update [token required]:[product id] '/api/products/id' [patch] request must contains the following:
- ```
-  {
-        "name": "Your New Product Name",
-        "price": 500      => Your New Product Price
-  }
- ```
-- delete [token required]:[product id] '/api/products/id' [delete]
-
 #### Users
-- Index [token required]: '/api/users' [GET]
-- Show [token required]:[user id] '/api/users/:id' [GET]
-- Create '/api/users/register' [POST] request must contains the following:
+- Index [token required]: '/users' [GET]
+- Show [token required]:[user id] '/users/:id' [GET]
+- Create '/register' [POST] request must contains the following:
  ```
   {
         "first_name": "Your User first name",
         "last_name": "Your User Last Name,
+        "email": "Your Email"
         "password": "Your User Password"
   }
  ```
 - When You Create a New User You will Get a JWT Token in Response
 
-- Update [token required]:[user id] '/api/users/id' [patch] request must contains the following:
- ```
-  {
-        "first_name": "Your New first name",
-        "last_name": "Your New Last Name,
-        "password": "Your New Password"
-  }
- ```
-- delete [token required]:[user id] '/api/users/id' [delete]
-
 ### Authenticate
-- Login '/api/users/login'
+- Login '/login'
 - Login will Create a New JWT Token
 
 #### Orders
-- Add Product To user Orders (args: user id)[token required]: '/api/orders/' [POST] request must contains the following:
- ```
-  {
-        "quantity": "Your quantity",
-        "status": "Your Status",
-        "user_id": "Your User Id"
-        "product_id": "Product id"
-  }
-  ```
-- Current Order by user (args: user id)[token required]: '/api/orders/:id' [GET]
-- will return all the products for this user_id
+- Current Order by user (args: user id)[token required]: 'users/:id/current-order' [GET]
 
 ## Data Shapes
 #### Product
 -  id
 - name
 - price
+- category
 
 #### User
 - id
@@ -127,10 +101,11 @@ Follow These Steps To Start The Project
 
 #### Orders
 - id
+- id of each product in the order
 - quantity of each product in the order
-- status of order (active or complete)
 - user_id
-- product_id
+- status of order (active or complete)
+
 
 
 
