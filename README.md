@@ -84,7 +84,22 @@ Follow These Steps To Start The Project
 - Login will Create a New JWT Token
 
 #### Orders
-- Current Order by user (args: user id)[token required]: 'users/:id/current-order' [GET]
+- create order [token required]: '/users' [POST]
+ ```
+  {
+    "status": "open",
+    "user_id": 1
+  }
+ ```
+- Create Order Product [token required]: '/users/:id/products' [POST]
+ ```
+  {
+    "order_id": 1,
+    "product_id": 1,
+    "quantity": 5
+  }
+ ```
+- Current Order by user (args: user id)[token required]: '/users/:id/current-order' [GET]
 
 ## Data Shapes
 #### Product
