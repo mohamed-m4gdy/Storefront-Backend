@@ -7,8 +7,8 @@ import {
 import requiresAuth from '../middlewares/auth.middleware'
 const product = Router()
 
-product.get('/', requiresAuth, getAllProducts)
-product.get('/:id', requiresAuth, getProduct)
+product.get('/', getAllProducts)
+product.get('/:id', getProduct)
 product.post('/', requiresAuth, createProduct)
 
 export default product

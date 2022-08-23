@@ -5,8 +5,8 @@ These are the notes from a meeting with the frontend developer that describe wha
 
 ## API Endpoints
 #### Products
-- Index: [token required]: '/products' [GET]
-- Show: [token required]: '/products/:id' [GET]
+- Index '/products' [GET]
+- Show '/products/:id' [GET]
 - Create [token required]: '/products' [POST]
 
 #### Users
@@ -15,27 +15,45 @@ These are the notes from a meeting with the frontend developer that describe wha
 - Create '/register' [POST]
 
 ### Authenticate
-- Login '/login'
+- Login '/login' [POST]
 
 #### Orders
 - Current Order by user (args: user id)[token required]: 'users/:id/current-order' [GET]
+- create order [token required]: '/users' [POST]
+ ```
+  {
+    "status": "open",
+    "user_id": 1
+  }
+ ```
+- Create Order Product [token required]: '/users/:id/products' [get]
+ ```
+  {
+    "order_id": 1,
+    "product_id": 1,
+    "quantity": 5
+  }
+ ```
 
 ## Data Shapes
-#### Product
--  id
-- name
-- price
-- [OPTIONAL] category
+#### product
+- id serial primary key,
+- name varchar
+- price integer
+- category varchar
 
-#### User
-- id
-- firstName
-- lastName
-- password
+#### user
+- id serial primary key
+- firstName varchar
+- lastName varchar
+- password varchar
+- email varchar
+#### orders
+- id serial primary key
+- status varchar
+- user_id references user(id)
 
-#### Orders
-- id
-- id of each product in the order
-- quantity of each product in the order
-- user_id
-- status of order (active or complete)
+### order_products
+- order_id references orders(id)
+- product_id references products(id)
+- quantit integer

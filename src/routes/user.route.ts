@@ -12,7 +12,7 @@ const user = Router()
 user.get('/', requiresAuth, getAllUsers)
 user.get('/:id', requiresAuth, getUser)
 user.get('/:id/current-order', requiresAuth, getUserOpenOrder)
-user.post('/', createOrder)
-user.post('/:id/products', OrderProducts)
+user.post('/', requiresAuth, createOrder)
+user.post('/:id/products', requiresAuth, OrderProducts)
 
 export default user

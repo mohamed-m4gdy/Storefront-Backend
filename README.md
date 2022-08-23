@@ -9,18 +9,20 @@ This Project Is A Api Store For Create a RESTful Node API with Express, SQL, JWT
 Follow These Steps To Start The Project
 
 - run `npm install`
-- create .env file at the root directory that contains the following:
+### to connect to Database
+- You need To install postgres database in ur system and create the following:
+- create .env file at the root directory that contains the following
   ```
   NODE_ENV=dev
-  POSTGRES_HOST=your postgresql host
-  POSTGRES_PORT=your postgresql port
-  POSTGRES_DB=your postgresql database name
-  POSTGRES_DB_TEST=your postgresql test database name
-  POSTGRES_USER=your postgresql user
-  POSTGRES_PASSWORD=your postgresql password
-  BCRYPT_PASSWORD=Your bcrtypt security password
-  SALT_ROUNDS=10
-  TOKEN_SECRET=your jwt secret
+  POSTGRES_HOST= [your postgresql host]
+  POSTGRES_PORT= [your postgresql port] == default port 5432
+  POSTGRES_DB= [your postgresql database name]
+  POSTGRES_DB_TEST= [your postgresql test database ]
+  POSTGRES_USER= [your postgresql user]
+  POSTGRES_PASSWORD= [your postgresql password]
+  BCRYPT_PASSWORD= [Your bcrtypt security password]
+  SALT_ROUNDS= []10
+  TOKEN_SECRET= [your jwt secret]
   ```
 - create a database.json file at the root directory that contains the following:
   ```
@@ -45,18 +47,16 @@ Follow These Steps To Start The Project
   }
   - for more details check config file in utils folder
   ```
-- install db-migrate globally by running npm install -g db-migrate
-- if you are on windows run [npm run migration:run] to create the database tables
-- run db-migrate up to create the database tables
---if you are on mac change the test script in package.json to this export NODE_ENV=test && db-migrate up --env test && tsc && jasmine && db-migrate reset
-
-- run npm run dev to start the development server
+## install db-migrate globally by running npm install -g db-migrate
+## if you are on windows run [npm run migration:run] to create the database tables
+## run db-migrate up to create the database tables
+## if you are on mac change the test script in package.json to this export NODE_ENV=test && db-migrate up --env test && tsc && jasmine && db-migrate reset
+# run npm run dev to start the development server
 ## API Endpoints
 
-
 #### Products
-- Index: [token required]: '/products' [GET]
-- Show: [token required]:[product id] '/products/:id' [GET]
+- Index '/products' [GET]
+- Show [product id] '/products/:id' [GET]
 - Create [token required]: '/products' [POST] request must contains the following:
  ```
   {
@@ -102,25 +102,27 @@ Follow These Steps To Start The Project
 - Current Order by user (args: user id)[token required]: '/users/:id/current-order' [GET]
 
 ## Data Shapes
-#### Product
--  id
-- name
-- price
-- category
+#### product
+- id serial primary key,
+- name varchar
+- price integer
+- category varchar
 
-#### User
-- id
-- firstName
-- lastName
-- password
+#### user
+- id serial primary key
+- firstName varchar
+- lastName varchar
+- password varchar
+- email varchar
+#### orders
+- id serial primary key
+- status varchar
+- user_id references user(id)
 
-#### Orders
-- id
-- id of each product in the order
-- quantity of each product in the order
-- user_id
-- status of order (active or complete)
-
+### order_products
+- order_id references orders(id)
+- product_id references products(id)
+- quantit integer
 
 
 
