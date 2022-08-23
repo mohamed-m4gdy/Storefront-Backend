@@ -18,15 +18,15 @@ These are the notes from a meeting with the frontend developer that describe wha
 - Login '/login' [POST]
 
 #### Orders
-- Current Order by user (args: user id)[token required]: 'users/:id/current-order' [GET]
-- create order [token required]: '/users' [POST]
+- Current Order by user (args: user id)[token required]: 'order/:id/current-order' [GET]
+- create order [token required]: '/order' [POST]
  ```
   {
     "status": "open",
     "user_id": 1
   }
  ```
-- Create Order Product [token required]: '/users/:id/products' [get]
+- Create Order Product [token required]: '/order/:id/products' [get]
  ```
   {
     "order_id": 1,

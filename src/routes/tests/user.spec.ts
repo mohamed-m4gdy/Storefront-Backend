@@ -65,16 +65,4 @@ describe('User Endpoints', () => {
       })
     expect(res.status).toBe(200)
   })
-
-  it('should return 400 without auth header', async () => {
-    const res = await request.get('/users/1/current-order')
-    expect(res.status).toBe(400)
-  })
-
-  it('should return 200 with auth header', async () => {
-    const res = await request
-      .get('/users/1/current-order')
-      .set('Authorization', `Bearer ${token}`)
-    expect(res.status).toBe(200)
-  })
 })

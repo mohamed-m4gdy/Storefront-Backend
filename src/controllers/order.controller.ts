@@ -26,12 +26,3 @@ export const getUserOpenOrder = async (req: Request, res: Response) => {
     res.status(500).send({ message: "An Error occurred while getting user's order" })
   }
 }
-
-export const OrderProducts = async (req: Request, res: Response) => {
-  try {
-    const orders = await order.OrderProduct(req.body)
-    res.send(orders)
-  } catch (e) {
-    console.log(`Error While Creating Order ${e}`)
-  }
-}

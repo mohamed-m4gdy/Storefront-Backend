@@ -6,6 +6,7 @@ import Ratelimit from 'express-rate-limit'
 import product from './routes/product.route'
 import user from './routes/user.route'
 import auth from './routes/auth.route'
+import order from './routes/order.route'
 import config from './utils/config'
 
 const port = config.port || 3000
@@ -36,6 +37,7 @@ app.use(
 app.use('/products', product)
 app.use('/users', user)
 app.use('/', auth)
+app.use('/orders', order)
 
 app.get('/', function (req: Request, res: Response) {
   res.send('Hello World!')
